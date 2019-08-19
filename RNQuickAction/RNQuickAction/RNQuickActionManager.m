@@ -12,6 +12,8 @@
 #import <React/RCTUtils.h>
 #import "RNQuickActionManager.h"
 
+static UIApplicationShortcutItem *initAction;
+
 NSString *const RCTShortcutItemClicked = @"ShortcutItemClicked";
 
 NSDictionary *RNQuickAction(UIApplicationShortcutItem *item) {
@@ -25,12 +27,14 @@ NSDictionary *RNQuickAction(UIApplicationShortcutItem *item) {
 
 @implementation RNQuickActionManager
 {
-    UIApplicationShortcutItem *_initialAction;
 }
 
 RCT_EXPORT_MODULE();
 
-@synthesize bridge = _bridge;
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[@"quickActionShortcut"];
+}
 
 - (instancetype)init
 {
@@ -54,12 +58,6 @@ RCT_EXPORT_MODULE();
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)setBridge:(RCTBridge *)bridge
-{
-    _bridge = bridge;
-    _initialAction = [bridge.launchOptions[UIApplicationLaunchOptionsShortcutItemKey] copy];
 }
 
 // Map user passed array of UIApplicationShortcutItem
@@ -155,15 +153,26 @@ RCT_EXPORT_METHOD(clearShortcutItems)
 
 - (void)handleQuickActionPress:(NSNotification *) notification
 {
-    [_bridge.eventDispatcher sendDeviceEventWithName:@"quickActionShortcut"
-                                                body:notification.userInfo];
+    NSLog(@"quickActionShortcut handleQuickActionPress %@", notification.userInfo);
+    [self sendEventWithName:@"quickActionShortcut" body:notification.userInfo];
 }
 
-- (NSDictionary *)constantsToExport
+RCT_REMAP_METHOD(popInitialAction,
+                 popInitialActionResolve:(RCTPromiseResolveBlock)resolve popInitialActionReject:(RCTPromiseRejectBlock)reject)
 {
-    return @{
-      @"initialAction": RCTNullIfNil(RNQuickAction(_initialAction))
-    };
+    NSLog(@"quickActionShortcut popInitialAction %@", RNQuickAction(initAction));
+    resolve(RNQuickAction(initAction));
 }
 
++(void) setInitAction:(UIApplicationShortcutItem *)shortcutItem
+{
+    NSLog(@"quickActionShortcut: setInitAction");
+
+    @try {
+        NSLog(@"quickActionShortcut setInitAction %@", shortcutItem);
+        initAction = [shortcutItem copy];
+    } @catch (NSException *exception) {
+        NSLog(@"quickActionShortcut setInitAction error %@", exception);
+    }
+}
 @end

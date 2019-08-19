@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AD90517D1BD2EE4A00EFDEBC /* RNQuickActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AD90517B1BD2EE4A00EFDEBC /* RNQuickActionManager.m */; settings = {ASSET_TAGS = (); }; };
+		AD90517D1BD2EE4A00EFDEBC /* RNQuickActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AD90517B1BD2EE4A00EFDEBC /* RNQuickActionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -104,6 +104,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 91090D821BB6C934009AE358;

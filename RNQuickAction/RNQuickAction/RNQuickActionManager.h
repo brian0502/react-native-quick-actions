@@ -7,7 +7,10 @@
 //
 
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 
-@interface RNQuickActionManager : NSObject <RCTBridgeModule>
+@interface RNQuickActionManager : RCTEventEmitter <RCTBridgeModule>
 +(void) onQuickActionPress:(UIApplicationShortcutItem *) shortcutItem completionHandler:(void (^)(BOOL succeeded)) completionHandler;
+
++(void) setInitAction : (UIApplicationShortcutItem *) shortcutItem;
 @end

@@ -1,5 +1,6 @@
-var RNQuickActionManager = require('react-native').NativeModules.RNQuickActionManager;
-var _initialAction = RNQuickActionManager && RNQuickActionManager.initialAction;
+import { NativeModules } from 'react-native';
+
+var RNQuickActionManager = NativeModules.RNQuickActionManager;
 
 module.exports = {
   /**
@@ -10,11 +11,7 @@ module.exports = {
    * action object, or `null`. Subsequent invocations will return null.
    */
   popInitialAction: function() {
-    return new Promise((resolve) => {
-      var initialAction = _initialAction;
-      _initialAction = null;
-      resolve(initialAction);
-    })
+    return RNQuickActionManager.popInitialAction();
   },
 
   /**

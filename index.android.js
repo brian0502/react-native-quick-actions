@@ -1,4 +1,6 @@
-var ReactAppShortcuts = require('react-native').NativeModules.ReactAppShortcuts;
+import { NativeModules } from 'react-native';
+
+var ReactAppShortcuts = NativeModules.ReactAppShortcuts;
 
 module.exports = {
   /**
